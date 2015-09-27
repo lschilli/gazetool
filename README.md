@@ -1,7 +1,22 @@
 This repository contains a calibration free gaze tracking system based on freely available libraries and data sets. The system is able to estimate horizontal and vertical gaze directions as well as eye closeness. A system description will be available in:
-* Lars Schillingmann and Yukie Nagai, "Yet Another Gaze Detector: An Embodied Calibration Free System for the iCub Robot", 15th IEEE RAS Humanoids Conference on Humanoid Robots, 2015
+
+`Lars Schillingmann and Yukie Nagai, "Yet Another Gaze Detector: An Embodied Calibration Free System for the iCub Robot", 15th IEEE RAS Humanoids Conference on Humanoid Robots, 2015`
 
 Please cite the above paper when using this module for your research.
+
+## Installation
+
+Make sure you have the following dependencies available / installed:
+* QT5: http://www.qt.io/download/
+* opencv 2.x.x: http://opencv.org/downloads.html
+* boost: http://www.boost.org/
+* dlib: http://dlib.net/
+
+Run `getFaceAlignmentModel.sh` in the `data` directory to download dlib's face alignment model which is required for running gazetool.
+
+## Running gazeool
+
+
 
 
 ## Technical Notes
