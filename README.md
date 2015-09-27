@@ -27,10 +27,11 @@ Compiling
   * A QT Bug might further limit the maximum framerate when using multiple QT GLWidgets
 * Some BLAS implementations automatically use multithreading which seems to negatively affect performance in our case.
   * If openblas is used as default blas implementation: set the environment variable OPENBLAS_NUM_THREADS=1
-* Optimization flags have a strong performance impact
- * Include architecture specific optimzation such as "-march=native -O3" in CMAKE_CXX_FLAGS
- * Enable USE_AVX_INSTRUCTIONS, USE_SSE2_INSTRUCTIONS, or USE_SSE4_INSTRUCTIONS if applicable (used by dlib)
- * make sure blas and lapack libraries are installed 
+* Optimization notes
+ * Include architecture specific optimzation flags such as `-march=native -O3` in `CMAKE_CXX_FLAGS`
+ * Enable `USE_AVX_INSTRUCTIONS`, `USE_SSE2_INSTRUCTIONS`, or `USE_SSE4_INSTRUCTIONS` if applicable (used by dlib)
+ * make sure blas and lapack libraries are installed
+ * gazetool should be able to process 640x480 input at 30fps on most recent machines (including notebooks)
 
 ## References
 
