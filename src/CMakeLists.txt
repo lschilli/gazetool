@@ -1,11 +1,6 @@
-#SET(MOC_HEADERS
-#    glimageview.h
-#    gazergui.h
-#)
-
 QT5_WRAP_UI(UI_HEADERS gazergui.ui)
 
-SET(DLIBGAZER_SRC
+SET(GAZETOOL_SRC
     main.cpp
     imageprovider.cpp
     faceparts.cpp
@@ -33,14 +28,14 @@ SET(DLIBGAZER_SRC
 
 IF(ENABLE_YARP_SUPPORT)
     ADD_DEFINITIONS(-DENABLE_YARP_SUPPORT)
-    SET(DLIBGAZER_SRC ${DLIBGAZER_SRC} yarpsupport.cpp)
+    SET(DLIBGAZER_SRC ${GAZETOOL_SRC} yarpsupport.cpp)
 ENDIF()
 
-ADD_EXECUTABLE(dlibgazer ${DLIBGAZER_SRC})
-ADD_DEPENDENCIES(dlibgazer ${UI_HEADERS})
-TARGET_LINK_LIBRARIES(dlibgazer dlib GL ${Boost_LIBRARIES} ${YARP_LIBRARIES} ${OpenCV_LIBS})
-qt5_use_modules(dlibgazer Core Widgets Gui OpenGL)
+ADD_EXECUTABLE(gazetool ${GAZETOOL_SRC})
+ADD_DEPENDENCIES(gazetool ${UI_HEADERS})
+TARGET_LINK_LIBRARIES(gazetool dlib GL ${Boost_LIBRARIES} ${YARP_LIBRARIES} ${OpenCV_LIBS})
+qt5_use_modules(gazetool Core Widgets Gui OpenGL)
 
-INSTALL(TARGETS dlibgazer
+INSTALL(TARGETS gazetool
   RUNTIME DESTINATION bin
 )

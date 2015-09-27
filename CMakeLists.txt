@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
-#cmake_policy(SET CMP0043 OLD)
-#cmake_policy(SET CMP0046 OLD)
 
-PROJECT(dlibgazer)
+PROJECT(gazetool)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
@@ -27,15 +25,14 @@ ENDIF()
 INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIR} ${Boost_INCLUDE_DIR} ${YARP_INCLUDE_DIRS})
 
 ADD_SUBDIRECTORY(src)
-#ADD_SUBDIRECTORY(inpainttool)
 
-CONFIGURE_FILE(dlibgazer.sh.in dlibgazer.sh @ONLY)
+CONFIGURE_FILE(gazetool.sh.in gazetool.sh @ONLY)
 
 INSTALL(FILES
     data/shape_predictor_68_face_landmarks.dat
     data/gaze_est_deg.dat
     data/lid_est.dat
     data/vertgaze_est_deg.dat
-    DESTINATION share/dlibgazer)
+    DESTINATION share/gazetool)
 
-INSTALL(PROGRAMS ${CMAKE_BINARY_DIR}/dlibgazer.sh DESTINATION bin)
+INSTALL(PROGRAMS ${CMAKE_BINARY_DIR}/gazetool.sh DESTINATION bin)
