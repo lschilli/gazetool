@@ -23,8 +23,8 @@ Compiling
 
 ## Technical Notes
 
-* Sync to vblank can negatively affect performance
-  * A QT Bug might further limit the maximum framerate when using multiple QT GLWidgets
+* Sync to vblank might negatively affect performance
+  * A QT bug might further limit the maximum framerate when using multiple QT GLWidgets
 * Some BLAS implementations automatically use multithreading which seems to negatively affect performance in our case.
   * If openblas is used as default blas implementation: set the environment variable OPENBLAS_NUM_THREADS=1
 * Optimization notes
