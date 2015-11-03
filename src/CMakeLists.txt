@@ -33,7 +33,7 @@ ENDIF()
 
 ADD_EXECUTABLE(gazetool ${GAZETOOL_SRC})
 ADD_DEPENDENCIES(gazetool ${UI_HEADERS})
-TARGET_LINK_LIBRARIES(gazetool dlib GL ${Boost_LIBRARIES} ${YARP_LIBRARIES} ${OpenCV_LIBS})
+TARGET_LINK_LIBRARIES(gazetool GL ${Boost_LIBRARIES} ${YARP_LIBRARIES} ${OpenCV_LIBS} ${dlib_LIBRARIES})
 qt5_use_modules(gazetool Core Widgets Gui OpenGL)
 
 INSTALL(TARGETS gazetool
