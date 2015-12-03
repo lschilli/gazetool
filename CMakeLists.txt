@@ -5,6 +5,7 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 OPTION(ENABLE_YARP_SUPPORT "Enable yarp support" OFF)
+OPTION(ENABLE_INSTALL_DLIB_FACE_MODEL "Install the dlib face landmarks model" OFF)
 set(CMAKE_AUTOMOC TRUE)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -27,10 +28,15 @@ ADD_SUBDIRECTORY(src)
 CONFIGURE_FILE(gazetool.sh.in gazetool.sh @ONLY)
 
 INSTALL(FILES
-    data/shape_predictor_68_face_landmarks.dat
     data/gaze_est_deg.dat
     data/lid_est.dat
     data/vertgaze_est_deg.dat
     DESTINATION share/gazetool)
+
+IF(ENABLE_INSTALL_DLIB_FACE_MODEL)
+    INSTALL(FILES
+        data/shape_predictor_68_face_landmarks.dat
+        DESTINATION share/gazetool)
+ENDIF()
 
 INSTALL(PROGRAMS ${CMAKE_BINARY_DIR}/gazetool.sh DESTINATION bin)
