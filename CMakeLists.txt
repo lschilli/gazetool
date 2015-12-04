@@ -4,9 +4,11 @@ PROJECT(gazetool)
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
+SET(GAZE_CONFIG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/config")
+
 OPTION(ENABLE_YARP_SUPPORT "Enable yarp support" OFF)
 OPTION(ENABLE_INSTALL_DLIB_FACE_MODEL "Install the dlib face landmarks model" OFF)
-OPTION(ENABLE_QT5 "Enable QT5 support" ON)
+OPTION(ENABLE_QT5 "Build demo (QT5 is required)" ON)
 
 option(USE_AVX_INSTRUCTIONS  "Compile your program with AVX instructions"  OFF)
 if(USE_AVX_INSTRUCTIONS)
@@ -35,10 +37,11 @@ ENDIF()
 INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIR} ${Boost_INCLUDE_DIR} ${YARP_INCLUDE_DIRS} ${dlib_INCLUDE_DIRS})
 
 ADD_SUBDIRECTORY(src/lib)
-ADD_SUBDIRECTORY(src)
 
+IF (ENABLE_QT5)
+    ADD_SUBDIRECTORY(src)
+ENDIF()
 
-CONFIGURE_FILE(gazetool.sh.in gazetool.sh @ONLY)
 
 INSTALL(FILES
     data/gaze_est_deg.dat
@@ -51,5 +54,3 @@ IF(ENABLE_INSTALL_DLIB_FACE_MODEL)
         data/shape_predictor_68_face_landmarks.dat
         DESTINATION share/gazetool)
 ENDIF()
-
-INSTALL(PROGRAMS ${CMAKE_BINARY_DIR}/gazetool.sh DESTINATION bin)
