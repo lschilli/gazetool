@@ -8,6 +8,11 @@ OPTION(ENABLE_YARP_SUPPORT "Enable yarp support" OFF)
 OPTION(ENABLE_INSTALL_DLIB_FACE_MODEL "Install the dlib face landmarks model" OFF)
 OPTION(ENABLE_QT5 "Enable QT5 support" ON)
 
+option(USE_AVX_INSTRUCTIONS  "Compile your program with AVX instructions"  OFF)
+if(USE_AVX_INSTRUCTIONS)
+     add_definitions(-mavx)
+endif()
+
 set(CMAKE_AUTOMOC TRUE)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
