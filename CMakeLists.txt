@@ -1,7 +1,14 @@
 cmake_minimum_required(VERSION 2.8)
 
-PROJECT(gazetool)
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+PROJECT(gaze)
+
+set(GAZE_MAJOR_VERSION 0)
+set(GAZE_MINOR_VERSION 1)
+set(GAZE_PATCH_VERSION 0)
+set(GAZE_VERSION
+  ${GAZE_MAJOR_VERSION}.${GAZE_MINOR_VERSION}.${GAZE_PATCH_VERSION})
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGSq} -std=c++11")
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 SET(GAZE_CONFIG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/config")
@@ -36,7 +43,7 @@ ENDIF()
 
 INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIR} ${Boost_INCLUDE_DIR} ${YARP_INCLUDE_DIRS} ${dlib_INCLUDE_DIRS})
 
-ADD_SUBDIRECTORY(src/lib)
+#ADD_SUBDIRECTORY(src/lib)
 
 IF (ENABLE_QT5)
     ADD_SUBDIRECTORY(src)
@@ -47,10 +54,10 @@ INSTALL(FILES
     data/gaze_est_deg.dat
     data/lid_est.dat
     data/vertgaze_est_deg.dat
-    DESTINATION share/gazetool)
+    DESTINATION share/gaze)
 
 IF(ENABLE_INSTALL_DLIB_FACE_MODEL)
     INSTALL(FILES
         data/shape_predictor_68_face_landmarks.dat
-        DESTINATION share/gazetool)
+        DESTINATION share/gaze)
 ENDIF()
