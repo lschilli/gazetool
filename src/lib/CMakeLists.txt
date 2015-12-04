@@ -1,3 +1,45 @@
+cmake_minimum_required(VERSION 2.8)
+
+PROJECT(gaze_lib)
+
+set(GAZE_LIB_MAJOR_VERSION 0)
+set(GAZE_LIB_MINOR_VERSION 1)
+set(GAZE_LIB_PATCH_VERSION 0)
+set(GAZE_LIB_VERSION
+  ${GAZE_LIB_MAJOR_VERSION}.${GAZE_LIB_MINOR_VERSION}.${GAZE_LIB_PATCH_VERSION})
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+OPTION(ENABLE_YARP_SUPPORT "Enable yarp support" OFF)
+OPTION(ENABLE_QT5 "Build demo (QT5 is required)" ON)
+
+option(USE_AVX_INSTRUCTIONS  "Compile your program with AVX instructions"  OFF)
+if(USE_AVX_INSTRUCTIONS)
+     add_definitions(-mavx)
+endif()
+
+set(CMAKE_AUTOMOC TRUE)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+FIND_PACKAGE(dlib REQUIRED)
+FIND_PACKAGE(OpenCV REQUIRED)
+FIND_PACKAGE(Boost COMPONENTS system chrono program_options REQUIRED)
+
+IF (ENABLE_QT5)
+    FIND_PACKAGE(Qt5Core REQUIRED)
+    FIND_PACKAGE(Qt5Widgets REQUIRED)
+    FIND_PACKAGE(Qt5OpenGL REQUIRED)
+    FIND_PACKAGE(Qt5Gui REQUIRED)
+    ADD_DEFINITIONS(-DENABLE_QT5)
+ENDIF()
+
+IF(ENABLE_YARP_SUPPORT)
+    FIND_PACKAGE(YARP REQUIRED)
+ENDIF()
+
+INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${YARP_INCLUDE_DIRS} ${dlib_INCLUDE_DIRS})
+
 SET(GAZE_LIB_SRC
     imageprovider.cpp
     faceparts.cpp
@@ -39,9 +81,9 @@ export(PACKAGE gaze)
 
 set(INSTALL_INCLUDE_DIRS "${CMAKE_INSTALL_PREFIX}/include/gaze/")
 
-configure_file("${GAZE_CONFIG_DIR}/gazeConfig.cmake.in"
+configure_file("config/gazeConfig.cmake.in"
   "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/gazeConfig.cmake" @ONLY)
-configure_file("${GAZE_CONFIG_DIR}/gazeConfigVersion.cmake.in"
+configure_file("config/gazeConfigVersion.cmake.in"
   "${PROJECT_BINARY_DIR}/gazeConfigVersion.cmake" @ONLY)
 
 export(TARGETS gaze
