@@ -1,3 +1,5 @@
+------------ DEPRECATED ----------------
+
 This repository contains a calibration free gaze tracking system based on freely available libraries and data sets. The system is able to estimate horizontal and vertical gaze directions as well as eye closeness. A system description will be available in:
 * `Lars Schillingmann and Yukie Nagai, "Yet Another Gaze Detector: An Embodied Calibration Free System for the iCub Robot", 15th IEEE RAS Humanoids Conference on Humanoid Robots, 2015`
 
