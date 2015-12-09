@@ -14,11 +14,6 @@ SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 OPTION(ENABLE_YARP_SUPPORT "Enable yarp support" OFF)
 OPTION(ENABLE_QT5 "Build demo (QT5 is required)" ON)
 
-option(USE_AVX_INSTRUCTIONS  "Compile your program with AVX instructions"  OFF)
-if(USE_AVX_INSTRUCTIONS)
-     add_definitions(-mavx)
-endif()
-
 set(CMAKE_AUTOMOC TRUE)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 

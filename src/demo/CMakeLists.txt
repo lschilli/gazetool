@@ -12,11 +12,6 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 OPTION(ENABLE_YARP_SUPPORT "Enable yarp support" OFF)
-option(USE_AVX_INSTRUCTIONS  "Compile your program with AVX instructions"  OFF)
-
-if(USE_AVX_INSTRUCTIONS)
-     add_definitions(-mavx)
-endif()
 
 set(CMAKE_AUTOMOC TRUE)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
