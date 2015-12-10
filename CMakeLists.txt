@@ -1,0 +1,51 @@
+cmake_minimum_required(VERSION 2.8)
+
+PROJECT(gazetool_demo)
+
+set(GAZETOOL_MAJOR_VERSION 0)
+set(GAZETOOL_MINOR_VERSION 1)
+set(GAZETOOL_PATCH_VERSION 0)
+set(GAZETOOL_VERSION
+  ${GAZETOOL_MAJOR_VERSION}.${GAZETOOL_MINOR_VERSION}.${GAZETOOL_PATCH_VERSION})
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+OPTION(ENABLE_YARP_SUPPORT "Enable yarp support" OFF)
+
+add_subdirectory(src/lib)
+add_subdirectory(data)
+
+set(CMAKE_AUTOMOC TRUE)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+FIND_PACKAGE(OpenCV REQUIRED)
+FIND_PACKAGE(Qt5Core REQUIRED)
+FIND_PACKAGE(Qt5Widgets REQUIRED)
+FIND_PACKAGE(Qt5OpenGL REQUIRED)
+FIND_PACKAGE(Qt5Gui REQUIRED)
+ADD_DEFINITIONS(-DENABLE_QT5)
+
+INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS} src/ui src/lib)
+
+QT5_WRAP_UI(UI_HEADERS src/ui/gazergui.ui)
+
+SET(GAZETOOL_BIN
+    src/ui/main.cpp
+    src/ui/gazergui.cpp
+    src/ui/workerthread.cpp
+    src/ui/glimageview.cpp
+    ${UI_HEADERS})
+
+ADD_EXECUTABLE(gazetool_ui ${GAZETOOL_BIN})
+ADD_DEPENDENCIES(gazetool_ui ${UI_HEADERS})
+TARGET_LINK_LIBRARIES(gazetool_ui gazetool GL)
+qt5_use_modules(gazetool_ui Core Widgets Gui OpenGL)
+
+CONFIGURE_FILE("src/ui/config/gazetool.sh.in" gazetool.sh @ONLY)
+
+INSTALL(TARGETS gazetool_ui
+  RUNTIME DESTINATION bin
+)
+
+INSTALL(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/gazetool.sh DESTINATION bin)

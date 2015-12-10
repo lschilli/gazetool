@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 PROJECT(gazetool_data)
 
-OPTION(ENABLE_INSTALL_DLIB_FACE_MODEL "Install the dlib face landmarks model" OFF)
+OPTION(ENABLE_INSTALL_DLIB_FACE_MODEL "Install the dlib face landmarks model" ON)
 
 
 INSTALL(FILES
