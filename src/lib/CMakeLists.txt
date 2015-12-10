@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 2.8)
 
-PROJECT(gaze_lib)
+PROJECT(libgazetool)
 
-set(GAZE_LIB_MAJOR_VERSION 0)
-set(GAZE_LIB_MINOR_VERSION 1)
-set(GAZE_LIB_PATCH_VERSION 0)
-set(GAZE_LIB_VERSION
-  ${GAZE_LIB_MAJOR_VERSION}.${GAZE_LIB_MINOR_VERSION}.${GAZE_LIB_PATCH_VERSION})
+set(GAZETOOL_LIB_MAJOR_VERSION 0)
+set(GAZETOOL_LIB_MINOR_VERSION 1)
+set(GAZETOOL_LIB_PATCH_VERSION 0)
+set(GAZETOOL_LIB_VERSION
+  ${GAZETOOL_LIB_MAJOR_VERSION}.${GAZETOOL_LIB_MINOR_VERSION}.${GAZETOOL_LIB_PATCH_VERSION})
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
@@ -35,7 +35,7 @@ ENDIF()
 
 INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${YARP_INCLUDE_DIRS} ${dlib_INCLUDE_DIRS})
 
-SET(GAZE_LIB_SRC
+SET(GAZETOOL_LIB_SRC
     imageprovider.cpp
     faceparts.cpp
     pupilfinder.cpp
@@ -57,44 +57,39 @@ SET(GAZE_LIB_SRC
 
 IF(ENABLE_YARP_SUPPORT)
     ADD_DEFINITIONS(-DENABLE_YARP_SUPPORT)
-    SET(GAZE_LIB_SRC ${GAZE_LIB_SRC} yarpsupport.cpp)
+    SET(GAZETOOL_LIB_SRC ${GAZETOOL_LIB_SRC} yarpsupport.cpp)
 ENDIF()
 
 
-ADD_LIBRARY(gaze SHARED ${GAZE_LIB_SRC})
-target_link_libraries(gaze ${OpenCV_LIBS} ${dlib_LIBRARIES} ${Boost_LIBRARIES} ${YARP_LIBRARIES})
+ADD_LIBRARY(gazetool SHARED ${GAZETOOL_LIB_SRC})
+target_link_libraries(gazetool ${OpenCV_LIBS} ${dlib_LIBRARIES} ${Boost_LIBRARIES} ${YARP_LIBRARIES})
 
 IF (ENABLE_QT5)
-    qt5_use_modules(gaze Core)
+    qt5_use_modules(gazetool Core)
 ENDIF()
 
+set(INSTALL_INCLUDE_DIRS "${CMAKE_INSTALL_PREFIX}/include/gazetool/")
 
-export(TARGETS gaze
-  FILE "${PROJECT_BINARY_DIR}/gazeTargets.cmake")
-export(PACKAGE gaze)
+configure_file("config/gazetoolConfig.cmake.in"
+  "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/gazetoolConfig.cmake" @ONLY)
+configure_file("config/gazetoolConfigVersion.cmake.in"
+  "${PROJECT_BINARY_DIR}/gazetoolConfigVersion.cmake" @ONLY)
 
+export(TARGETS gazetool
+  FILE "${PROJECT_BINARY_DIR}/gazetoolTargets.cmake")
+export(PACKAGE gazetool)
 
-set(INSTALL_INCLUDE_DIRS "${CMAKE_INSTALL_PREFIX}/include/gaze/")
-
-configure_file("config/gazeConfig.cmake.in"
-  "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/gazeConfig.cmake" @ONLY)
-configure_file("config/gazeConfigVersion.cmake.in"
-  "${PROJECT_BINARY_DIR}/gazeConfigVersion.cmake" @ONLY)
-
-export(TARGETS gaze
-  FILE "${PROJECT_BINARY_DIR}/gazeTargets.cmake")
-
-INSTALL(TARGETS gaze
+INSTALL(TARGETS gazetool
      LIBRARY DESTINATION lib
 )
 
 INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
-    DESTINATION "include/gaze"
+    DESTINATION "include/gazetool"
     FILES_MATCHING
     PATTERN "*.h")
 
 install(FILES
-  "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/gazeConfig.cmake"
-  "${PROJECT_BINARY_DIR}/gazeConfigVersion.cmake"
-  "${PROJECT_BINARY_DIR}/gazeTargets.cmake"
-  DESTINATION "lib/cmake/gaze" COMPONENT dev)
+  "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/gazetoolConfig.cmake"
+  "${PROJECT_BINARY_DIR}/gazetoolConfigVersion.cmake"
+  "${PROJECT_BINARY_DIR}/gazetoolTargets.cmake"
+  DESTINATION "lib/cmake/gazetool" COMPONENT dev)
