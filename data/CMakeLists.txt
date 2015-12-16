@@ -11,8 +11,9 @@ INSTALL(FILES
     vertgaze_est_deg.dat
     DESTINATION share/gazetool)
 
+
 IF(ENABLE_INSTALL_DLIB_FACE_MODEL)
     INSTALL(FILES
-        shape_predictor_68_face_landmarks.dat
-        DESTINATION share/gazetool)
+       shape_predictor_68_face_landmarks.dat
+       DESTINATION share/gazetool)
 ENDIF()
