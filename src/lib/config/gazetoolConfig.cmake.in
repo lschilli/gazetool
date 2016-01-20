@@ -1,0 +1,16 @@
+# - Config file for the gazetool package
+# It defines the following variables
+#  GAZETOOL_INCLUDE_DIRS - include directories for FooBar
+#  GAZETOOL_LIBRARIES    - libraries to link against
+
+# Compute paths
+get_filename_component(gazetool_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+
+set(gazetool_INCLUDE_DIRS "@INSTALL_INCLUDE_DIRS@")
+
+# Our library dependencies (contains definitions for IMPORTED targets)
+if(NOT TARGET gazetool)
+  include("${gazetool_CMAKE_DIR}/gazetoolTargets.cmake")
+endif()
+
+set(gazetool_LIBRARIES gazetool)

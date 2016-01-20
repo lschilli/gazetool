@@ -6,14 +6,17 @@
 #include <chrono>
 #include <dlib/image_processing.h>
 #include <dlib/opencv.h>
-#include <qt5/QtCore/QMetaType>
 #include <boost/optional.hpp>
 
 #include "pupilfinder.h"
 
 class GazeHypList;
 typedef std::shared_ptr<GazeHypList> GazeHypsPtr;
+#ifdef ENABLE_QT5
+#include <qt5/QtCore/QMetaType>
 Q_DECLARE_METATYPE(GazeHypsPtr)
+#endif
+
 
 struct GazeHyp {
     dlib::rectangle faceDetection;
