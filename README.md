@@ -3,11 +3,11 @@ This repository contains a calibration free gaze tracking system based on freely
 
 Please cite the above paper when using this module for your research.
 
-## Installation
+## Out of the box demo installation
 
 Make sure you have the following dependencies available / installed:
 * QT5: http://www.qt.io/download/
-* opencv 2.x.x: http://opencv.org/downloads.html
+* opencv: http://opencv.org/downloads.html
 * boost: http://www.boost.org/
 * dlib: http://dlib.net/
 * run `getFaceAlignmentModel.sh` in the `data` directory to download dlib's face alignment model which is required for running gazetool.
@@ -20,6 +20,28 @@ Compiling
 
 ## Running gazetool
 * Run `gazetool.sh -c 0` to use the first webcam attached to your system
+
+## Manual library installation (no QT is needed)
+
+Make sure you have the following dependencies available / installed:
+* opencv: http://opencv.org/downloads.html
+* boost: http://www.boost.org/
+* dlib: http://dlib.net/
+* run `getFaceAlignmentModel.sh` in the `data` directory to download dlib's face alignment model which is required for running gazetool.
+
+Compiling
+* cmake is used, thus a standard cmake configure run is required in the data and the src/lib folder
+* `cd data`
+* `mkdir build && cd build && cmake ..`
+* run `make`
+* run `make install`
+* `cd ../../src/lib`
+* `mkdir build && cd build && cmake ..`
+* run `make`
+* run `make install`
+
+This will install the library and all necessary configuration files to use it.
+Furthermore a cmake module file is created in `${CMAKE_INSTALL_PREFIX}/lib/cmake/gazetool` which can be used to link against this library.
 
 ## Technical Notes
 
