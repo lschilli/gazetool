@@ -1,4 +1,5 @@
 #include "glimageview.h"
+#include <qsurfaceformat.h>
 
 GLImageView::GLImageView(QWidget *parent) :
         QGLWidget(parent), format(GL_BGR), depth(GL_UNSIGNED_BYTE) {
@@ -12,7 +13,7 @@ GLImageView::~GLImageView() {
 
 
 void GLImageView::initializeGL() {
-    qglClearColor(bgColor);
+    //qglClearColor(bgColor);
     glDisable(GL_DEPTH_TEST);
     glViewport(0, 0, this->width(), this->height());
     glMatrixMode(GL_PROJECTION);
