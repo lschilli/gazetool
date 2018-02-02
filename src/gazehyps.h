@@ -42,7 +42,7 @@ public:
     GazeHypList();
     cv::Mat frame;
     std::chrono::system_clock::time_point frameTime;
-    dlib::cv_image<dlib::bgr_pixel> dlibimage;
+    dlib::array2d<unsigned char> dlibimage;
     double latency = 0.0;
     double fps = 0.0;
     int frameCounter = 0;

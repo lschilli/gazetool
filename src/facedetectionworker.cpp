@@ -59,7 +59,7 @@ void FaceDetectionWorker::thread() {
                 ghyps->frameTime = std::chrono::system_clock::now();
                 ghyps->label = imgprovider->getLabel();
                 ghyps->id = imgprovider->getId();
-                ghyps->dlibimage = dlib::cv_image<dlib::bgr_pixel>(ghyps->frame);
+                dlib::assign_image(ghyps->dlibimage, dlib::cv_image<dlib::bgr_pixel>(ghyps->frame));
                 _workqueue.push(ghyps);
                 _hypsqueue.push(ghyps);
             } else {
