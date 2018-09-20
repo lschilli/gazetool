@@ -18,7 +18,7 @@ bool YarpImageProvider::get(cv::Mat& frame) {
     if (imagePort.isClosed()) return false;
     yarp::sig::ImageOf<yarp::sig::PixelRgb> *image = imagePort.read(true);
     if (image) {
-        cv::Mat rgbframe((IplImage*)image->getIplImage());
+        cv::Mat rgbframe = cv::cvarrToMat(static_cast<IplImage*>(image->getIplImage()));
         cv::cvtColor(rgbframe, frame, CV_RGB2BGR);
         return true;
     }
@@ -56,37 +56,37 @@ void YarpSender::sendGazeHypotheses(GazeHypsPtr hyps)
     allfaces.add("faces");
     for (GazeHyp& ghyp : *hyps) {
         Bottle& bghyp = allfaces.addList();
-        bghyp.add("face");
+        bghyp.addString("face");
         {   Bottle& bfacerect = bghyp.addList();
             auto fr = ghyp.pupils.faceRect();
-            bfacerect.add("facerect");
-            bfacerect.add(fr.x);
-            bfacerect.add(fr.y);
-            bfacerect.add(fr.width);
-            bfacerect.add(fr.height);
+            bfacerect.addString("facerect");
+            bfacerect.addDouble(fr.x);
+            bfacerect.addDouble(fr.y);
+            bfacerect.addDouble(fr.width);
+            bfacerect.addDouble(fr.height);
         }
         {   Bottle& brelgaze = bghyp.addList();
-            brelgaze.add("gaze");
+            brelgaze.addString("gaze");
             if (ghyp.horizontalGazeEstimation.is_initialized()) {
-                brelgaze.add(ghyp.horizontalGazeEstimation.get());
+                brelgaze.addDouble(ghyp.horizontalGazeEstimation.get());
             }
         }
         {   Bottle& blid = bghyp.addList();
-            blid.add("lid");
+            blid.addString("lid");
             if (ghyp.eyeLidClassification.is_initialized()) {
-                blid.add(ghyp.eyeLidClassification.get());
+                blid.addDouble(ghyp.eyeLidClassification.get());
             }
         }
         {   Bottle& bmutgaze = bghyp.addList();
-            bmutgaze.add("mutualgaze");
+            bmutgaze.addString("mutualgaze");
             if (ghyp.isMutualGaze.is_initialized()) {
-                bmutgaze.add(ghyp.isMutualGaze.get());
+                bmutgaze.addInt8(ghyp.isMutualGaze.get());
             }
         }
         {   Bottle& lidclosed = bghyp.addList();
-            lidclosed.add("lidclosed");
+            lidclosed.addString("lidclosed");
             if (ghyp.isLidClosed.is_initialized()) {
-                lidclosed.add(ghyp.isLidClosed.get());
+                lidclosed.addIn8(ghyp.isLidClosed.get());
             }
         }
     }
